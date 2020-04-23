@@ -178,12 +178,12 @@ public class FileUtils {
             new File(destationPath).mkdir();
         }
         try {
-            if(linux_mac_Win.equalsIgnoreCase("linux")){
+            if(System.getProperty("os.name").contains("win")){
+                command = "cmd /c copy  " + sourcePathFile + "  " + destationPath;
+            }else if(System.getProperty("os.name").contains("Mac")){
                 run.exec("cd "+ sourcePath);
                 command = "mv "+sourcePathFile +" "+destationPath;
-            }else if(linux_mac_Win.equalsIgnoreCase("windows") || linux_mac_Win.equalsIgnoreCase("win")){
-                command = "cmd /c copy  " + sourcePathFile + "  " + destationPath;
-            }else if(linux_mac_Win.equalsIgnoreCase("mac")){
+            }else {
                 run.exec("cd "+ sourcePath);
                 command = "mv "+sourcePathFile +" "+destationPath;
             }
