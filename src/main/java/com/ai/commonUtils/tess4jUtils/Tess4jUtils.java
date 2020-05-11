@@ -10,6 +10,12 @@ import net.sourceforge.tess4j.Tesseract;
 
 public class Tess4jUtils {
 	private static Logger logger = Logger.getLogger(Tess4jUtils.class);
+
+
+	public static void main(String[] args) {
+		String s = orc("/Users/macos/Desktop/验证码.png",true);
+		System.out.println(s);
+	}
 	
 	/**
 	 * 如果isCN 为true 那么支持识别中文， 如果为false那么不支持中文识别
@@ -24,7 +30,6 @@ public class Tess4jUtils {
 			ITesseract instance = new Tesseract();
 			if(isCN){
 				instance.setDatapath(System.getProperty("user.dir")+File.separator+"tessdata");
-				System.out.println(System.getProperty("user.dir")+File.separator+"tessdata");
 				instance.setLanguage("chi_sim");
 				logger.info("识别图片" + path +" 中的中文数字字母： "+instance.doOCR(imageFile));
 			}else{

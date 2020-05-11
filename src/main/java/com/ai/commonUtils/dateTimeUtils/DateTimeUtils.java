@@ -748,6 +748,21 @@ public class DateTimeUtils {
         return calendar.getTime();
     }
 
+    /**
+     *判断是否是闰年
+     */
+    public static boolean isLeapYear(int year){
+        Boolean isLeapYear = null;
+        GregorianCalendar gc = new GregorianCalendar();
+        if(gc.isLeapYear(year)){
+            isLeapYear = true;
+        }else {
+            isLeapYear = false;
+        }
+        return isLeapYear;
+    }
+
+
 
 
 

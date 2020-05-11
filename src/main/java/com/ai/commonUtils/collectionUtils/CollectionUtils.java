@@ -8,7 +8,7 @@ import org.apache.log4j.Logger;
 public class CollectionUtils {
 	private static final Logger logger = Logger.getLogger(CollectionUtils.class);
 
-	/*private CollectionUtils(){}
+	/*private CollectionUtils(){}ƒ
 	private static CollectionUtils collectionUtils = null;
 	public static CollectionUtils getInstance(){
 		if (collectionUtils == null) {
