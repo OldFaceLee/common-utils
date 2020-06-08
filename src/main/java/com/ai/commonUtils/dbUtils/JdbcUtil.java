@@ -127,6 +127,7 @@ public class JdbcUtil {
                     temMap.put(strs[i],rs.getString(strs[i]));
                 }
             }
+            log.info("查询后的结果为："+temMap);
         } catch (SQLException throwables) {
             log.error("数据库查询失败",throwables);
             throwables.printStackTrace();
@@ -302,15 +303,45 @@ public class JdbcUtil {
         return update;
     }
 
+    public int insert(String tableName,Map<String,String> fieldValues){
+        int insert = 0;
+        String front = "insert into "+tableName+" (";
+        String middle = ") values (";
+        StringBuilder initFrontMiddle = new StringBuilder(front);
+        for(Map.Entry<String,String> m : fieldValues.entrySet()){
+            initFrontMiddle.append(m.getKey()).append(",");
+        }
+        String frontMiddle = initFrontMiddle.substring(0,initFrontMiddle.length()-1) + middle;
+
+        StringBuilder end = new StringBuilder();
+        for(Map.Entry<String,String> m : fieldValues.entrySet()){
+            end.append("\"");
+            end.append(m.getValue());
+            end.append("\"").append(",");
+        }
+        String subEnd = end.substring(0,end.length()-1);
+        String sqlFinal = frontMiddle + subEnd + ")";
+        System.out.println(sqlFinal);
+        try {
+            insert = statement.executeUpdate(sqlFinal);
+            log.info(String.format("执行sql语句[%s],且该语句返回结果为[%s]",sqlFinal,insert));
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return insert;
+    }
+
+
+
 
     public static void main(String[] args) {
         JdbcUtil util = new JdbcUtil();
-        util.connectDB(DBType.MYSQL,"192.168.61.201","3306","iot_vehicle","root","!@#$qwer");
-        HashMap<String,String> result = util.query("select * from cfg_user","user_name");
-        System.out.printf(result.toString());
-        System.out.println("取出来的："+result.get("user_name"));
-        List<String> list = util.query("select * from cfg_user","user_name",true);
-        System.out.printf(list.get(0));
+//        util.connectDB(DBType.MYSQL,"192.168.61.201","3306","iot_vehicle","root","!@#$qwer");
+        Map<String,String> map = new HashMap<>();
+        map.put("key1","1");
+        map.put("key2","2");
+        map.put("key3","3");
+        util.insert("table",map);
     }
 
 }
