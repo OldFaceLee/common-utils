@@ -116,6 +116,24 @@ public class JdbcUtil {
         }
     }
 
+    public HashMap<String,String> query(String sql,String field){
+        log.info(String.format("执行数据库sql【%s】",sql));
+        HashMap temMap = new HashMap();
+        try {
+            rs = statement.executeQuery(sql);
+            if(rs.next()){
+                String[] strs = field.split(",");
+                for (int i = 0; i < strs.length; i++) {
+                    temMap.put(strs[i],rs.getString(strs[i]));
+                }
+            }
+        } catch (SQLException throwables) {
+            log.error("数据库查询失败",throwables);
+            throwables.printStackTrace();
+        }
+        return temMap;
+    }
+
     /**
      * 查询数据库表，遍历返回的List<Map<String,Object>>，给出key,获取value,设置了boolean开关，true=为自动关闭，false为手动关闭
      * @param sql
@@ -130,7 +148,11 @@ public class JdbcUtil {
             for(Map<String,Object> map: list){
                 for(Map.Entry<String,Object> m : map.entrySet()){
                     if(mapKey.equalsIgnoreCase(m.getKey())){
-                        mapVaule.add(m.getValue().toString());
+                        if (m.getValue() == null) {
+                            mapVaule.add(null);
+                        }else {
+                            mapVaule.add(m.getValue().toString());
+                        }
                     }
                 }
             }
@@ -278,6 +300,17 @@ public class JdbcUtil {
             closeDB();
         }
         return update;
+    }
+
+
+    public static void main(String[] args) {
+        JdbcUtil util = new JdbcUtil();
+        util.connectDB(DBType.MYSQL,"192.168.61.201","3306","iot_vehicle","root","!@#$qwer");
+        HashMap<String,String> result = util.query("select * from cfg_user","user_name");
+        System.out.printf(result.toString());
+        System.out.println("取出来的："+result.get("user_name"));
+        List<String> list = util.query("select * from cfg_user","user_name",true);
+        System.out.printf(list.get(0));
     }
 
 }

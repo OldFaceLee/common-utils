@@ -49,8 +49,6 @@
             <version>1.0.1</version>
         </dependency>
 
-
-
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
@@ -178,6 +176,14 @@
             <artifactId>jsch</artifactId>
             <version>0.1.53</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/redis.clients/jedis -->
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>3.2.0</version>
+        </dependency>
+
 
 
 
