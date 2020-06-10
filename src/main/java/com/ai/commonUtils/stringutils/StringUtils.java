@@ -77,9 +77,6 @@ public class StringUtils {
     }
 
 
-    public static void main(String[] args) {
-        System.out.println(getInteger("3456"));
-    }
     /**
      * 获取"空" ， "空格" ，"null"的string
      * @return
@@ -108,6 +105,15 @@ public class StringUtils {
 
     public static Integer getInteger(String key){
         return Integer.valueOf(getString(key));
+    }
+
+    public static void main(String[] args) {
+        String str = "北京市北京,市丰台区,卢沟桥街道,青塔中街青塔中街44号院,116.26589,39.89339";
+        String[] strs = str.split(",",-1);
+        for(String s :strs){
+            System.out.println(s);
+        }
+        System.out.println(strs[strs.length-2]);
     }
 
 

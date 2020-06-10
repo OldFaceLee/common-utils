@@ -20,6 +20,27 @@ public class CollectionUtils {
 
 
 	/**
+	 * 在一个list里边制定listSize后分出多个子list
+	 * @param list
+	 * @param toIndex
+	 * @param <T>
+	 * @return
+	 */
+	public <T> List<List<T>> subList(List<T> list, int toIndex) {
+		List<List<T>> result = new ArrayList<>();
+		int listSize = list.size();
+		for (int i = 0; i < list.size(); i += toIndex) {
+			if (i + toIndex > listSize) {
+				toIndex = listSize - i;
+			}
+			List newList = list.subList(i, i + toIndex);
+			result.add(newList);
+		}
+		return result;
+	}
+
+
+	/**
 	 * 已知Map，获取key中最大的值
 	 * @param map
 	 * @return

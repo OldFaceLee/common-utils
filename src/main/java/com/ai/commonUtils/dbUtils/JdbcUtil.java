@@ -135,6 +135,44 @@ public class JdbcUtil {
         return temMap;
     }
 
+    public static Object[][] getData(String sql){
+        ArrayList<String> arrkey = new ArrayList<String>();
+        Map<String, String>[][] map = new HashMap[0][];
+        return null;
+
+
+    }
+
+    public Map<String,String> query(String sql){
+        Map<String,String>  map = new HashMap();
+        List<String> valueList = new ArrayList<>();
+        int count = 0;
+        try {
+            rs = statement.executeQuery(sql);
+            log.info("执行sql语句【"+sql+"】");
+            ResultSetMetaData rsmd;
+            rsmd = rs.getMetaData();
+            count = rsmd.getColumnCount();
+            while(rs.next()){
+                for(int i=1;i<=count;i++){
+                    //获取指定列的表目录名称
+                    String label=rsmd.getColumnLabel(i);
+                    //以 Java 编程语言中 Object 的形式获取此 ResultSet 对象的当前行中指定列的值
+                    Object object= rs.getObject(i);
+                    //把数据库中的字段名和值对应为一个map对象中的一个键值对
+                    valueList.add(object.toString());
+                    map.put(label.toLowerCase(), object.toString());
+                }
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } finally {
+
+        }
+        return map;
+
+    }
+
     /**
      * 查询数据库表，遍历返回的List<Map<String,Object>>，给出key,获取value,设置了boolean开关，true=为自动关闭，false为手动关闭
      * @param sql
@@ -334,14 +372,14 @@ public class JdbcUtil {
 
 
 
+
     public static void main(String[] args) {
         JdbcUtil util = new JdbcUtil();
-//        util.connectDB(DBType.MYSQL,"192.168.61.201","3306","iot_vehicle","root","!@#$qwer");
-        Map<String,String> map = new HashMap<>();
-        map.put("key1","1");
-        map.put("key2","2");
-        map.put("key3","3");
-        util.insert("table",map);
+        util.connectDB(DBType.MYSQL,"localhost","3306","oldface","root","root");
+//        List<String> results= util.query("select * from gis_addr_compare","source_location",true);
+        List<Map<String,Object>> list = util.resultList("select * from gis_addr_compare");
+        System.out.println(list);
     }
+
 
 }
