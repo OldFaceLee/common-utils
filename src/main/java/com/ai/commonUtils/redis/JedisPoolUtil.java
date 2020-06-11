@@ -11,7 +11,7 @@ import java.net.URL;
 import java.util.Properties;
 
 /**
- * @Author lixuejun19
+ * @Author OldFace
  * @Date 2020/6/8 17:44
  */
 public class JedisPoolUtil {
