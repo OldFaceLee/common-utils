@@ -3,7 +3,7 @@ package com.ai.commonUtils.mathUtil;
 import java.math.BigDecimal;
 
 /**
- * @Author lixuejun19
+ * @Author OldFace
  * @Date 2020/6/11 16:38
  * @Description:
  */
